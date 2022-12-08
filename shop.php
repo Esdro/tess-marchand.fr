@@ -43,6 +43,11 @@ if (isset($get) && sizeof($get) > 0) {
   }
   if (isset($products["categorie"])) {
     $categorie = $products["categorie"];
+  
+if (strpos($categorie, "%2B") !== false) {
+      $categorie = str_replace("%2B", " ", $categorie);
+    } 
+     $categorie = trim($categorie);
   } else {
     $categorie = null;
   }
@@ -125,7 +130,7 @@ include_once('header.php');
                     $val = str_replace(" ", "+", $val);
                   }
                   // echo $val; 
-                  echo '<option value="' . lcfirst($val) . '">' . $value["titre"] . '</option>';
+                  echo '<option value="'. lcfirst($val) .'">' . $value["titre"] . '</option>';
                 }
                 ?>
               </select>
@@ -152,7 +157,7 @@ include_once('header.php');
               </div>
               <div class="row">
                 <div class="d-grid gap-auto my-2">
-                  <input type="range" class="form-range" min="1000" max="100000" step="500" id="customRange3" name="prix">
+                  <input type="range" class="form-range" min="1000" max="10000" step="500" id="customRange3" name="prix">
                 </div>
               </div>
               <div class="row">

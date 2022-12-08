@@ -45,6 +45,21 @@ verifParams();
     * {
       box-sizing: border-box !important;
     }
+
+   .bg-dark  {
+      background-color: #FFE4C9 !important;
+    }
+    .color-black {
+      color: black !important;
+    }
+    .color-principal{
+      background-color: #FFE4C9 !important;
+      color: black !important;
+    }
+    .text-italic {
+      font-style: italic;
+      text-decoration: wavy;
+    }
   </style>
 </head>
 
@@ -52,33 +67,33 @@ verifParams();
 
 
   <nav class="navbar  navbar-dark bg-dark">
-    <div class="container-fluid">
+    <div class="container-fluid  ">
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-        <span class="navbar-toggler-icon"></span>
+      <button class="navbar-toggler col-md-3 text-center " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+        <span class="navbar-toggler-icon bg-black "></span>
       </button>
-      <a class="navbar-brand" href="<?php echo  BASE_URL . SP  ?>"> <img src="publics/images/logo-site.jpg" alt="Logo" width="75"></a>
+      <a class="navbar-brand col-md-4 d-flex justify-content-center" href="<?php echo  BASE_URL . SP  ?>"> <img src="publics/images/logo-site.jpg" alt="Logo" width="75"></a>
 
-      <a class="navbar-brand" href="<?php echo  BASE_URL . SP  ?>"> Livraison offerte dès 75€ d’achat 💫</a>
+      <a class="navbar-brand text-black  " href="<?php echo  BASE_URL . SP  ?>"> Livraison offerte dès 75€ d’achat 💫</a>
 
 
 
-      <div class=" offcanvas offcanvas-start text-bg-dark " tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+      <div class=" offcanvas offcanvas-start text-bg-dark color-principal " tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Vintage Shop</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
 
         <div class="offcanvas-body ">
-          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 color-principal">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="<?php echo  BASE_URL . SP ?>">Accueil </a>
+              <a class="nav-link active color-black" aria-current="page" href="<?php echo  BASE_URL . SP ?>">Accueil </a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle color-black " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Shop
               </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
+              <ul class="dropdown-menu color-principal">
                 <li>
                   <a class="dropdown-item" href="<?php echo  BASE_URL . SP . "shop.php?offset=0" ?>">Tous les Produits</a>
                 </li>
@@ -95,21 +110,21 @@ verifParams();
               </ul>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="<?php echo  BASE_URL . SP . "contact.php" ?>">Contact</a>
+              <a class="nav-link color-black" href="<?php echo  BASE_URL . SP . "contact.php" ?>">Contact</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="<?php echo  BASE_URL . SP . "a-propos.php" ?>">A propos </a>
+              <a class="nav-link color-black " href="<?php echo  BASE_URL . SP . "a-propos.php" ?>">A propos </a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
             <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle  " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn color-principal dropdown-toggle  " type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="fa-solid fa-user mr-5"></i> Connexion
               </button>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item active" href="#">S'inscrire</a></li>
-                <li><a class="dropdown-item" href="#">Se connecter </a></li>
+              <ul class="dropdown-menu color-principal">
+                <li><a class="dropdown-item active" href="connexion.php">S'inscrire</a></li>
+                <li><a class="dropdown-item" href="connexion.php">Se connecter </a></li>
               </ul>
             </div>
           </ul>

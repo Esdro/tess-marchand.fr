@@ -1,6 +1,6 @@
 </main>
 
-<footer class="footer  bg-light px-2 pt-3 pb-1">
+<footer class="footer  color-principal px-2 pt-3 pb-1">
     <div class="container-fluid">
         <div class="row  align-seft-start justify-content-cente g-2r">
             <div class="col-12 col-sm-4">

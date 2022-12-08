@@ -17,34 +17,34 @@ include_once('header.php');
     </p>
   </div>
 
-<div class="row justify-content-center  m-4">
-<div class="col-md-6">
-<form>
-    <div class="form-floating mb-3">
-      <input type="email" class="form-control" id="inputEmail1" placeholder="Nom" required>
-      <label for="inputEmail1"> Nom : </label>
-    </div>
+  <div class="row justify-content-center  m-4">
+    <div class="col-md-6">
+      <form>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="inputEmail1" placeholder="Nom" required>
+          <label for="inputEmail1"> Nom : </label>
+        </div>
 
-    <div class="form-floating mb-3 mt-2">
-      <input type="text" class="form-control" id="inputAddress" placeholder="Email" required>
-      <label for="inputAddress">Email : </label>
-    </div>
-    <div class="form-floating mb-3">
-      <input type="text" class="form-control" id="inputEmail2" placeholder="Nom" required>
-      <label for="inputEmail2"> Numéro de téléphone : </label>
-    </div>
-    <div class="form-floating mb-3 mt-2">
-      <textarea class="form-control" row="10" col="10" placeholder="Message" required></textarea>
-      <label for="inputAddress2">Commentaire : </label>
-    </div>
+        <div class="form-floating mb-3 mt-2">
+          <input type="text" class="form-control" id="inputAddress" placeholder="Email" required>
+          <label for="inputAddress">Email : </label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="inputEmail2" placeholder="Nom" required>
+          <label for="inputEmail2"> Numéro de téléphone : </label>
+        </div>
+        <div class="form-floating mb-3 mt-2">
+          <textarea class="form-control" row="10" col="10" placeholder="Message" required></textarea>
+          <label for="inputAddress2">Commentaire : </label>
+        </div>
 
 
-    <div class="d-grid gap-auto">
-    <button type="submit" class="btn btn-success btn-lg btn-block mb-4">Envoyer</button>
+        <div class="d-grid gap-auto">
+          <button type="submit" class="btn btn-success btn-lg btn-block mb-4">Envoyer</button>
+        </div>
+      </form>
     </div>
-  </form>
-</div>
-</div>
+  </div>
 
 
 </div>
