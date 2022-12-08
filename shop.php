@@ -4,7 +4,9 @@ require_once("includes.php");
 
 $get = $_GET;
 
-$dataProducts = $model->getAllProducts();
+$off = isset($_GET['offset']) ? $_GET['offset'] : "0";
+
+$dataProducts = $model->getAllProducts(offset: $off);
 
 if (isset($get) && sizeof($get) > 0) {
 
@@ -37,12 +39,12 @@ if (isset($get) && sizeof($get) > 0) {
   if (isset($products["couleur"])) {
     $couleur = $products["couleur"];
   } else {
-    $couleur = "null";
+    $couleur = null;
   }
   if (isset($products["categorie"])) {
     $categorie = $products["categorie"];
   } else {
-    $categorie = "null";
+    $categorie = null;
   }
 
   // on traite les prix filtrés 
@@ -51,12 +53,12 @@ if (isset($get) && sizeof($get) > 0) {
     switch ($products["signe_prix"]) {
       case 'inferieur':
         $prix_inferieur = $products["prix"];
-        $prix_superieur = "null";
+        $prix_superieur = null;
         break;
 
       case 'superieur':
         $prix_superieur = $products["prix"];
-        $prix_inferieur = "null";
+        $prix_inferieur = null;
         break;
 
       default:
@@ -65,19 +67,14 @@ if (isset($get) && sizeof($get) > 0) {
         break;
     }
   } else {
-    $prix_inferieur = "null";
-    $prix_superieur = "null";
+    $prix_inferieur = null;
+    $prix_superieur = null;
   }
 
 
 
-  if ("null" == $categorie and "null" == $couleur and  "null" == $prix_inferieur and "null" == $prix_superieur) {
-
-    $dataProducts = $model->getAllProducts();
-  } else {
-
-    $dataProducts = $model->getAllProducts(categorie: $categorie, couleur: $couleur, prix_inferieur: $prix_inferieur, prix_superieur: $prix_superieur);
-  }
+    $dataProducts = $model->getAllProducts(categorie: $categorie, couleur: $couleur, prix_inferieur: $prix_inferieur, prix_superieur: $prix_superieur, offset: $off);
+  
 }
 
 
@@ -229,14 +226,14 @@ include_once('header.php');
         <div class="col-3 ">
           <nav aria-label="...">
             <ul class="pagination">
-              <li class="page-item <?php $_GET['offset'] == "1" ? print '  disabled' : print ' ' ; ?>">
-                <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=1" ; ?>">Précédent</a>
+              <li class="page-item <?php $off == "0" ? print '  disabled' : print ' ' ; ?>">
+                <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=0" ; ?>">Précédent</a>
               </li>
-              <li class="page-item <?php $_GET['offset'] == "1" ? print '  active' : print ' ' ; ?>" <?php $_GET['offset'] == "1" ? print 'aria-current="page"' : print ' ' ; ?> ><a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=1" ; ?>">1</a></li>
-              <li class="page-item<?php $_GET['offset'] == "11" ? print '  active' : print ' ' ; ?>" <?php $_GET['offset'] == "11" ? print 'aria-current="page"' : print ' ' ; ?>>
+              <li class="page-item <?php $off == "0" ? print '  active' : print ' ' ; ?>" <?php $off == "0" ? print 'aria-current="page"' : print ' ' ; ?> ><a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=0" ; ?>">1</a></li>
+              <li class="page-item<?php $off !== "0" ? print '  active' : print ' ' ; ?>" <?php $off !== "0" ? print 'aria-current="page"' : print ' ' ; ?>>
                 <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=" .$dataProducts[sizeof($dataProducts) - 1 ]["id"] ; ?>">2</a>
               </li>
-              <li class="page-item  <?php $_GET['offset'] == "11" ? print '  disabled' : print ' ' ; ?>" >
+              <li class="page-item  <?php $off !== "0" ? print '  disabled' : print ' ' ; ?>" >
                 <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=" .$dataProducts[sizeof($dataProducts) - 1 ]["id"] ; ?>">Suivant</a>
               </li>
             </ul>

@@ -41,9 +41,14 @@ verifParams();
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
+  <style>
+    * {
+      box-sizing: border-box !important;
+    }
+  </style>
 </head>
 
-<body>
+<body  >
 
 
   <nav class="navbar  navbar-dark bg-dark">
@@ -75,7 +80,7 @@ verifParams();
               </a>
               <ul class="dropdown-menu dropdown-menu-dark">
                 <li>
-                  <a class="dropdown-item" href="<?php echo  BASE_URL . SP . "shop.php?offset=1" ?>">Tous les Produits</a>
+                  <a class="dropdown-item" href="<?php echo  BASE_URL . SP . "shop.php?offset=0" ?>">Tous les Produits</a>
                 </li>
                 <?php
                 foreach ($categories as $key => $value) {
@@ -84,7 +89,7 @@ verifParams();
                     $val = str_replace(" ", "+", $val);
                   }
                   // echo $val; 
-                  print ' <li><a class="dropdown-item" href="' . BASE_URL . SP . 'shop.php?categorie=' . $val . '&offset=1">' .   $value["titre"] . '</a> </li>';
+                  print ' <li><a class="dropdown-item" href="' . BASE_URL . SP . 'shop.php?categorie=' . $val . '&offset=0">' .   $value["titre"] . '</a> </li>';
                 }
                 ?>
               </ul>
