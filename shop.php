@@ -36,12 +36,12 @@ if (isset($get) && sizeof($get) > 0) {
 
   if (isset($products["couleur"])) {
     $couleur = $products["couleur"];
-  }else {
+  } else {
     $couleur = "null";
   }
   if (isset($products["categorie"])) {
     $categorie = $products["categorie"];
-  }else {
+  } else {
     $categorie = "null";
   }
 
@@ -64,35 +64,27 @@ if (isset($get) && sizeof($get) > 0) {
         $prix_superieur = "100000";
         break;
     }
-  }else {
+  } else {
     $prix_inferieur = "null";
     $prix_superieur = "null";
   }
 
 
 
-if ("null" == $categorie and "null" == $couleur and  "null" == $prix_inferieur and "null" == $prix_superieur  ) {
+  if ("null" == $categorie and "null" == $couleur and  "null" == $prix_inferieur and "null" == $prix_superieur) {
 
-  $dataProducts = $model->getAllProducts();
+    $dataProducts = $model->getAllProducts();
+  } else {
 
-}else{
-
-  $dataProducts = $model->getAllProducts(categorie: $categorie, couleur: $couleur, prix_inferieur: $prix_inferieur, prix_superieur: $prix_superieur);
-
-}
-
- 
-
-
-
-
+    $dataProducts = $model->getAllProducts(categorie: $categorie, couleur: $couleur, prix_inferieur: $prix_inferieur, prix_superieur: $prix_superieur);
+  }
 }
 
 
 // var_dump($dataProducts);
 // die();
 
-exit();
+//exit();
 
 //die();
 
@@ -183,7 +175,75 @@ include_once('header.php');
       </div>
     </div>
     <div class="col-md-8">
-      <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe earum mollitia officia.</h1>
+
+      <div class="row justify-content-around">
+        <?php
+
+        foreach ($dataProducts as $key => $value) {
+
+          $des = explode(",,", $value["description"]);
+
+          $echo =  '  
+ 
+ <div class="card col-md-5 m-1 align-self-start ">
+<img src="' . BASE_URL . SP . "publics" . SP  . "uploads" . SP . $value["image_principale"] . '" class="card-img-top" alt="' . $value["titre"] . '" height = "400" >
+
+<div class="card-body">
+
+<h6 class="card-title mt-1">' . $value["titre"] . '</h6>
+<ul class="list-group list-group-flush my-2">';
+
+          foreach ($des as  $val) {
+
+            $echo .= ' <li class="list-group-item">' . $val . '</li> ';
+          }
+
+          $echo .=  '  </ul>
+<div class="d-grid gap-auto mt-1 ">
+<span class="fw-bold"> Prix :  €' . str_replace(".", ",",  number_format(((int) $value["prix"]) / 100, 2)) . '  </span>
+</div>
+
+<div class="d-grid gap-auto mt-4">';
+
+          $val = trim($value["titre"]);
+          if (strpos($val, " ") !== false) {
+            $val = str_replace(" ", "+", $val);
+            $val = lcfirst($val);
+          }
+
+          $echo .= '
+<a href="' . BASE_URL . SP . "produit.php?p=" . $val . '" class="btn btn-info btn-lg"> Détails </a>
+</div>
+</div>
+</div> ';
+
+          echo $echo;
+        }
+
+
+
+        ?>
+      </div>
+      <div class="row my-4 justify-content-end ">
+        <div class="container">
+        <div class="col-3 ">
+          <nav aria-label="...">
+            <ul class="pagination">
+              <li class="page-item <?php $_GET['offset'] == "1" ? print '  disabled' : print ' ' ; ?>">
+                <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=1" ; ?>">Précédent</a>
+              </li>
+              <li class="page-item <?php $_GET['offset'] == "1" ? print '  active' : print ' ' ; ?>" <?php $_GET['offset'] == "1" ? print 'aria-current="page"' : print ' ' ; ?> ><a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=1" ; ?>">1</a></li>
+              <li class="page-item<?php $_GET['offset'] == "11" ? print '  active' : print ' ' ; ?>" <?php $_GET['offset'] == "11" ? print 'aria-current="page"' : print ' ' ; ?>>
+                <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=" .$dataProducts[sizeof($dataProducts) - 1 ]["id"] ; ?>">2</a>
+              </li>
+              <li class="page-item  <?php $_GET['offset'] == "11" ? print '  disabled' : print ' ' ; ?>" >
+                <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=" .$dataProducts[sizeof($dataProducts) - 1 ]["id"] ; ?>">Suivant</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
