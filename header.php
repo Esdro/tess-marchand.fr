@@ -7,20 +7,7 @@ global $model;
 
 $categories = $model->getCategories();
 
-function verifParams()
-{
-  if (isset($_POST) && sizeof($_POST) > 0) {
 
-    foreach ($_POST as $key => $value) {
-      $data = trim($value);
-      $data = stripslashes($data);
-      $data = strip_tags($data);
-      $data = htmlspecialchars($data);
-
-      $_POST[$key] = $data;
-    }
-  }
-}
 
 verifParams();
 
@@ -46,16 +33,19 @@ verifParams();
       box-sizing: border-box !important;
     }
 
-   .bg-dark  {
+    .bg-dark {
       background-color: #FFE4C9 !important;
     }
+
     .color-black {
       color: black !important;
     }
-    .color-principal{
+
+    .color-principal {
       background-color: #FFE4C9 !important;
       color: black !important;
     }
+
     .text-italic {
       font-style: italic;
       text-decoration: wavy;
@@ -63,7 +53,7 @@ verifParams();
   </style>
 </head>
 
-<body  >
+<body>
 
 
   <nav class="navbar  navbar-dark bg-dark">
@@ -120,11 +110,24 @@ verifParams();
             </li>
             <div class="dropdown">
               <button class="btn color-principal dropdown-toggle  " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-user mr-5"></i> Connexion
+                <i class="fa-solid fa-user mr-5"></i> <?php isset($_SESSION["user"]) ? print $_SESSION["user"]["prenom"] . "   " .  $_SESSION["user"]["nom"]  : print ' Connexion';  ?>
               </button>
               <ul class="dropdown-menu color-principal">
-                <li><a class="dropdown-item active" href="connexion.php">S'inscrire</a></li>
-                <li><a class="dropdown-item" href="connexion.php">Se connecter </a></li>
+                <?php if (!isset($_SESSION["user"])) :   ?>
+
+                  <li><a class="dropdown-item active" href="connexion.php">S'inscrire</a></li>
+                  <li><a class="dropdown-item" href="connexion.php">Se connecter </a></li>
+                <?php endif ?>
+
+                <?php if (isset($_SESSION["user"])) :   ?>
+
+                  <li><a class="dropdown-item active" href="logout.php">Se déconnecter </a></li>
+
+                <?php endif ?>
+
+
+
+
               </ul>
             </div>
           </ul>
@@ -149,16 +152,16 @@ verifParams();
   <main class="container-fluid mt-2">
 
 
-    <div class="row">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <?php
 
-      <?php
 
-    
 
-      if (isset($_SESSION["flash"]) && sizeof($_SESSION["flash"]) > 0) {
-        switch ($_SESSION["flash"]["type"]) {
-          case 'success':
-            $echo =  ' 
+        if (isset($_SESSION["flash"]) && sizeof($_SESSION["flash"]) > 0) {
+          switch ($_SESSION["flash"]["type"]) {
+            case 'success':
+              $echo =  ' 
     <div class="alert alert-success d-flex align-items-center alert-dismissible fade show" role="alert">
     <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
     <div>
@@ -167,9 +170,9 @@ verifParams();
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
       ';
-            break;
-          case 'danger':
-            $echo =  ' 
+              break;
+            case 'danger':
+              $echo =  ' 
           <div class="alert alert-danger d-flex align-items-center  alert-dismissible fade show" role="alert">
   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
   <div>
@@ -178,9 +181,9 @@ verifParams();
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
             ';
-            break;
-          case 'warning':
-            $echo = '
+              break;
+            case 'warning':
+              $echo = '
            <div class="alert alert-warning d-flex align-items-center  alert-dismissible fade show" role="alert">
   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
   <div>
@@ -189,10 +192,10 @@ verifParams();
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
            ';
-            break;
+              break;
 
-          default:
-          $echo =  ' 
+            default:
+              $echo =  ' 
     <div class="alert alert-success d-flex align-items-center  alert-dismissible fade show" role="alert">
     <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
     <div>
@@ -201,14 +204,14 @@ verifParams();
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
       ';
-            break;
+              break;
+          }
+
+          echo $echo;
         }
-
-        echo $echo;
-
-      }
-      unset($_SESSION["flash"]);
+        unset($_SESSION["flash"]);
 
 
-      ?>
+        ?>
+      </div>
     </div>

@@ -18,6 +18,20 @@ define("SESSION_STATUS", session_status());
 
 $session = $_SESSION;
 
+function verifParams()
+{
+  if (isset($_POST) && sizeof($_POST) > 0) {
+
+    foreach ($_POST as $key => $value) {
+      $data = trim($value);
+      $data = stripslashes($data);
+      $data = strip_tags($data);
+      $data = htmlspecialchars($data);
+
+      $_POST[$key] = $data;
+    }
+  }
+}
 
 /*
 var_dump($session);

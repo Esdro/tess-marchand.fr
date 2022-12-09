@@ -126,6 +126,7 @@ class DataLayer
 
     /**
      * Création d'un nouvel utilisateur
+     * @return array $userDatas
      */
 
     function addUser( $userInfos)
@@ -173,6 +174,7 @@ class DataLayer
 
     /**
      * Authentification d'un utilisateur
+     * @return array $userData
      */
     function authentifierUser(  string $userMail, string $userPass)
     {

@@ -31,55 +31,49 @@ include_once('header.php');
             <div class="tab-content" id="pills-tabContent" >
                 <div class="tab-pane fade show active" id="pills-connexion" role="tabpanel" aria-labelledby="pills-connexion-tab" tabindex="0">
                     <h1>Connectez vous juste en deux clics ! </h1>
-                <form action="connexion.php" method="POST" >
-                <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="inputEmail1" placeholder="Nom" required>
-                    <label for="inputEmail1"> Nom : </label>
-                </div>
 
-                <div class="form-floating mb-3 mt-2">
-                    <input type="text" class="form-control" id="inputAddress" placeholder="Email" required>
-                    <label for="inputAddress">Email : </label>
+                <form action="conn.traitement.php" method="POST" >
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="conn_mail" required>
+                    <label for="inputEmail"> Votre e-mail : </label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="inputEmail2" placeholder="Nom" required>
-                    <label for="inputEmail2"> Numéro de téléphone : </label>
+                    <input type="password" class="form-control" id="mot_de_passe" placeholder="mot_de_passe" name="conn_pass" aria-describedby="passwordHelpInline">
+                    <label for="mot_de_passe">  Votre mot de passe  : </label>
                 </div>
-                <div class="form-floating mb-3 mt-2">
-                    <textarea class="form-control" row="10" col="10" placeholder="Message" required></textarea>
-                    <label for="inputAddress2">Commentaire : </label>
-                </div>
-
-
                 <div class="d-grid gap-auto">
                     <button type="submit" class="btn btn-success btn-lg btn-block mb-4 connexion">Se connecter </button>
                 </div>
             </form>
                 </div>
 
+
+
+
+
                 <div class="tab-pane fade" id="pills-inscription" role="tabpanel" aria-labelledby="pills-inscription-tab" tabindex="0">
 
                 <h1> L'inscription est simple et facile</h1>
-                <form action="connexion.php" method="POST">
+
+
+                <form action="inscription.traitement.php" method="POST">
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="inputEmail1" placeholder="Nom" required>
-                    <label for="inputEmail1"> Nom : </label>
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="user_mail" required>
+                    <label for="inputEmail"> Email : </label>
                 </div>
 
                 <div class="form-floating mb-3 mt-2">
-                    <input type="text" class="form-control" id="inputAddress" placeholder="Email" required>
-                    <label for="inputAddress">Email : </label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="inputEmail2" placeholder="Nom" required>
-                    <label for="inputEmail2"> Numéro de téléphone : </label>
+                    <input type="text" class="form-control" id="inputNom" placeholder="Nom" name="nom" required>
+                    <label for="inputNom"> Nom: </label>
                 </div>
                 <div class="form-floating mb-3 mt-2">
-                    <textarea class="form-control" row="10" col="10" placeholder="Message" required></textarea>
-                    <label for="inputAddress2">Commentaire : </label>
+                    <input type="text" class="form-control" id="inputPrenom" placeholder="Prénom" name="prenom" required>
+                    <label for="inputPrenom"> Prénom: </label>
                 </div>
-
-
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="mot_de_passe" placeholder="mot_de_passe" name="mot_de_passe" aria-describedby="passwordHelpInline">
+                    <label for="mot_de_passe">  Mot de passe  : </label>
+                </div>
                 <div class="d-grid gap-auto">
                     <button type="submit" class="btn btn-success btn-lg btn-block mb-4 inscription ">S'inscrire </button>
                 </div>
