@@ -43,11 +43,11 @@ if (isset($get) && sizeof($get) > 0) {
   }
   if (isset($products["categorie"])) {
     $categorie = $products["categorie"];
-  
-if (strpos($categorie, "%2B") !== false) {
+
+    if (strpos($categorie, "%2B") !== false) {
       $categorie = str_replace("%2B", " ", $categorie);
-    } 
-     $categorie = trim($categorie);
+    }
+    $categorie = trim($categorie);
   } else {
     $categorie = null;
   }
@@ -78,8 +78,7 @@ if (strpos($categorie, "%2B") !== false) {
 
 
 
-    $dataProducts = $model->getAllProducts(categorie: $categorie, couleur: $couleur, prix_inferieur: $prix_inferieur, prix_superieur: $prix_superieur, offset: $off);
-  
+  $dataProducts = $model->getAllProducts(categorie: $categorie, couleur: $couleur, prix_inferieur: $prix_inferieur, prix_superieur: $prix_superieur, offset: $off);
 }
 
 
@@ -130,7 +129,7 @@ include_once('header.php');
                     $val = str_replace(" ", "+", $val);
                   }
                   // echo $val; 
-                  echo '<option value="'. lcfirst($val) .'">' . $value["titre"] . '</option>';
+                  echo '<option value="' . lcfirst($val) . '">' . $value["titre"] . '</option>';
                 }
                 ?>
               </select>
@@ -181,45 +180,52 @@ include_once('header.php');
       <div class="row justify-content-around">
         <?php
 
-        foreach ($dataProducts as $key => $value) {
+        if (sizeof($dataProducts) > 0) {
 
-          $des = explode(",,", $value["description"]);
 
-          $echo =  '  
+          foreach ($dataProducts as $key => $value) {
+
+            $des = explode(",,", $value["description"]);
+
+            $echo =  '  
  
- <div class="card col-md-5 m-1 align-self-start ">
-<img src="' . BASE_URL . SP . "publics" . SP  . "uploads" . SP . $value["image_principale"] . '" class="card-img-top" alt="' . $value["titre"] . '" height = "400" >
+          <div class="card col-md-5 m-1 align-self-start ">
+          <img src="' . BASE_URL . SP . "publics" . SP  . "uploads" . SP . $value["image_principale"] . '" class="card-img-top" alt="' . $value["titre"] . '" height = "400" >
 
-<div class="card-body">
+          <div class="card-body">
 
-<h6 class="card-title mt-1">' . $value["titre"] . '</h6>
-<ul class="list-group list-group-flush my-2">';
+          <h6 class="card-title mt-1">' . $value["titre"] . '</h6>
+          <ul class="list-group list-group-flush my-2">';
 
-          foreach ($des as  $val) {
+            foreach ($des as  $val) {
 
-            $echo .= ' <li class="list-group-item">' . $val . '</li> ';
+              $echo .= ' <li class="list-group-item">' . $val . '</li> ';
+            }
+
+            $echo .=  '  </ul>
+          <div class="d-grid gap-auto mt-1 ">
+          <span class="fw-bold"> Prix :  €' . str_replace(".", ",",  number_format(((int) $value["prix"]) / 100, 2)) . '  </span>
+          </div>
+
+          <div class="d-grid gap-auto mt-4">';
+
+            $val = trim($value["titre"]);
+            if (strpos($val, " ") !== false) {
+              $val = str_replace(" ", "+", $val);
+              $val = lcfirst($val);
+            }
+
+            $echo .= '
+          <a href="' . BASE_URL . SP . "produit.php?p=" . $val . '" class="btn btn-info btn-lg"> Détails </a>
+          </div>
+          </div>
+          </div> ';
+
+            echo $echo;
           }
 
-          $echo .=  '  </ul>
-<div class="d-grid gap-auto mt-1 ">
-<span class="fw-bold"> Prix :  €' . str_replace(".", ",",  number_format(((int) $value["prix"]) / 100, 2)) . '  </span>
-</div>
-
-<div class="d-grid gap-auto mt-4">';
-
-          $val = trim($value["titre"]);
-          if (strpos($val, " ") !== false) {
-            $val = str_replace(" ", "+", $val);
-            $val = lcfirst($val);
-          }
-
-          $echo .= '
-<a href="' . BASE_URL . SP . "produit.php?p=" . $val . '" class="btn btn-info btn-lg"> Détails </a>
-</div>
-</div>
-</div> ';
-
-          echo $echo;
+        }else {
+          echo '  <h2> Désolé votre recherche n\'a abouti à un résultat concret       </h2>    ';
         }
 
 
@@ -228,22 +234,22 @@ include_once('header.php');
       </div>
       <div class="row my-4 justify-content-end ">
         <div class="container">
-        <div class="col-3 ">
-          <nav aria-label="...">
-            <ul class="pagination">
-              <li class="page-item <?php $off == "0" ? print '  disabled' : print ' ' ; ?>">
-                <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=0" ; ?>">Précédent</a>
-              </li>
-              <li class="page-item <?php $off == "0" ? print '  active' : print ' ' ; ?>" <?php $off == "0" ? print 'aria-current="page"' : print ' ' ; ?> ><a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=0" ; ?>">1</a></li>
-              <li class="page-item<?php $off !== "0" ? print '  active' : print ' ' ; ?>" <?php $off !== "0" ? print 'aria-current="page"' : print ' ' ; ?>>
-                <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=" .$dataProducts[sizeof($dataProducts) - 1 ]["id"] ; ?>">2</a>
-              </li>
-              <li class="page-item  <?php $off !== "0" ? print '  disabled' : print ' ' ; ?>" >
-                <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=" .$dataProducts[sizeof($dataProducts) - 1 ]["id"] ; ?>">Suivant</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+          <div class="col-3 ">
+            <nav aria-label="...">
+              <ul class="pagination">
+                <li class="page-item <?php $off == "0" ? print '  disabled' : print ' '; ?>">
+                  <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=0"; ?>">Précédent</a>
+                </li>
+                <li class="page-item <?php $off == "0" ? print '  active' : print ' '; ?>" <?php $off == "0" ? print 'aria-current="page"' : print ' '; ?>><a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=0"; ?>">1</a></li>
+                <li class="page-item<?php $off !== "0" ? print '  active' : print ' '; ?>" <?php $off !== "0" ? print 'aria-current="page"' : print ' '; ?>>
+                  <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=" . $dataProducts[sizeof($dataProducts) - 1]["id"]; ?>">2</a>
+                </li>
+                <li class="page-item  <?php $off !== "0" ? print '  disabled' : print ' '; ?>">
+                  <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=" . $dataProducts[sizeof($dataProducts) - 1]["id"]; ?>">Suivant</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
