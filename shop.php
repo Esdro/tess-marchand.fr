@@ -3,14 +3,18 @@
 require_once("includes.php");
 
 $get = $_GET;
+/*
+var_dump($get);
 
+exit();
+*/
 $off = isset($_GET['offset']) ? $_GET['offset'] : "0";
 
 $dataProducts = $model->getAllProducts(offset: $off);
 
 if (isset($get) && sizeof($get) > 0) {
 
-  $possible_filtres = ["couleur", "signe_prix", "prix", "categorie", "limit", "offset"];
+  $possible_filtres = ["couleur", "signe_prix", "prix", "categorie", "limit", "offset", "previous","next"];
 
   $products = [];
 
@@ -44,8 +48,8 @@ if (isset($get) && sizeof($get) > 0) {
   if (isset($products["categorie"])) {
     $categorie = $products["categorie"];
 
-    if (strpos($categorie, "%2B") !== false) {
-      $categorie = str_replace("%2B", " ", $categorie);
+    if (strpos($categorie, "_") !== false) {
+      $categorie = str_replace("_", " ", $categorie);
     }
     $categorie = trim($categorie);
   } else {
@@ -68,7 +72,7 @@ if (isset($get) && sizeof($get) > 0) {
 
       default:
         $prix_inferieur = "1000";
-        $prix_superieur = "100000";
+        $prix_superieur = "10000";
         break;
     }
   } else {
@@ -88,6 +92,21 @@ if (isset($get) && sizeof($get) > 0) {
 //exit();
 
 //die();
+
+if (sizeof($dataProducts) > 10 ) {
+
+
+  if (isset($_GET["next"]) && "true" == $_GET["next"] ) {
+    
+$dataProducts =   array_slice($dataProducts, 10, 10, true);
+  }elseif (isset($_GET["previous"]) && "true" == $_GET["previous"]) {
+    $dataProducts =   array_slice($dataProducts, 0, 10, true);
+  }else {
+     
+$dataProducts =   array_slice($dataProducts, 0, 10, true);
+  }
+
+}
 
 $page_title = " Boutique | Vintage Shop ";
 
@@ -123,14 +142,25 @@ include_once('header.php');
               <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="categorie">
                 <option value="null" selected>Quelle catégorie ?</option>
                 <?php
-                foreach ($categories as $key => $value) {
+                 
+                   foreach ($categories as $key => $value) {
+                     $val = trim($value["titre"]);
+                     if (strpos($val, " ") !== false) {
+                       $val = str_replace(" ", "_", $val);
+                     }
+                     // echo $val;
+                       print '<option value="' .$val. '">' . $value["titre"] . '</option>';
+                  //   print ' <li><a class="dropdown-item" href="' . BASE_URL . SP . 'shop.php?categorie=' . $val . '&offset=0">' .   $value["titre"] . '</a> </li>';
+                   }
+               
+            /*    foreach ($categories as $key => $value) {
                   $val = trim($value["titre"]);
                   if (strpos($val, " ") !== false) {
-                    $val = str_replace(" ", "+", $val);
+                    $val = str_replace(" ", "_", $val);
                   }
                   // echo $val; 
-                  echo '<option value="' . lcfirst($val) . '">' . $value["titre"] . '</option>';
-                }
+                 
+                }*/
                 ?>
               </select>
             </div>
@@ -237,15 +267,15 @@ include_once('header.php');
           <div class="col-3 ">
             <nav aria-label="...">
               <ul class="pagination">
-                <li class="page-item <?php $off == "0" ? print '  disabled' : print ' '; ?>">
-                  <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=0"; ?>">Précédent</a>
+                <li class="page-item <?php  isset( $_GET["previous"]) &&  $_GET["previous"] == "true" ? print '  disabled' : print ' '; ?>">
+                  <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?previous=true"; ?>">Précédent</a>
                 </li>
-                <li class="page-item <?php $off == "0" ? print '  active' : print ' '; ?>" <?php $off == "0" ? print 'aria-current="page"' : print ' '; ?>><a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=0"; ?>">1</a></li>
-                <li class="page-item<?php $off !== "0" ? print '  active' : print ' '; ?>" <?php $off !== "0" ? print 'aria-current="page"' : print ' '; ?>>
-                  <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=" . $dataProducts[sizeof($dataProducts) - 1]["id"]; ?>">2</a>
+                <li class="page-item <?php  isset( $_GET["previous"]) &&  $_GET["previous"] == "true" ? print '  active' : print ' '; ?>" <?php  isset( $_GET["previous"]) &&  $_GET["previous"] == "true" ? print 'aria-current="page"' : print ' '; ?>><a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?previous=true"; ?>">1</a></li>
+                <li class="page-item<?php  isset( $_GET["next"]) &&  $_GET["next"] == "true" ? print '  active' : print ' '; ?>" <?php  isset( $_GET["next"]) &&  $_GET["next"] == "true" ? print 'aria-current="page"' : print ' '; ?>>
+                  <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?next=true"; ?>">2</a>
                 </li>
-                <li class="page-item  <?php $off !== "0" ? print '  disabled' : print ' '; ?>">
-                  <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?offset=" . $dataProducts[sizeof($dataProducts) - 1]["id"]; ?>">Suivant</a>
+                <li class="page-item  <?php isset( $_GET["next"]) &&  $_GET["next"] == "true" ? print '  disabled' : print ' '; ?>">
+                  <a class="page-link" href="<?php echo BASE_URL . SP . "shop.php?next=true"; ?>">Suivant</a>
                 </li>
               </ul>
             </nav>

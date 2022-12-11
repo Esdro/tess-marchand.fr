@@ -24,7 +24,7 @@ class DataLayer
 
 
 
-    function getAllProducts(string $limit = "10",  string $categorie = null,  string $couleur = null, string $prix_inferieur = null, string $prix_superieur = null, $offset = "1")
+    function getAllProducts(string $limit = "10",  string $categorie = null,  string $couleur = null, string $prix_inferieur = null, string $prix_superieur = null, $offset = "0")
     {
 
         $sql = "SELECT `article`.*, `categorie`.`titre` AS nom_categorie  FROM `article`, `categorie` WHERE `article`.`categorie` = `categorie`.`id`  ";
@@ -50,7 +50,7 @@ class DataLayer
                 $sql .= "  AND `article`.`prix`  >=  " .  $prix_superieur;
             }
 
-            $sql .=  " LIMIT  $limit OFFSET $offset ;";
+          //  $sql .=  " LIMIT  $limit OFFSET $offset ;";
 
             // die($sql);
 
